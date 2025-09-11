@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { Container, Row, Col, Form, Button, Card, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../styles/AuthorizationPages/Register.css"; // Reusing the same CSS for consistency
 import PasswordRequirements from "../../common/components/AuthorizationPage/PasswordRequirements.jsx";
@@ -11,6 +11,10 @@ export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const location = useLocation();
+  
+  // Get email from navigation state or use a default
+  const userEmail = location.state?.email || "";
 
   const validatePassword = (pwd) => {
     const isLength = pwd.length >= 8;
@@ -45,7 +49,7 @@ export default function ResetPassword() {
         <AuthPageHeader />
 
         {/* Centered Reset Password Card */}
-        <Row className="justify-content-center align-items-center vh-75">
+        <Row className="justify-content-center align-items-center vh-75 mb-5">
           <Col xs={11} md={9} lg={5}>
             <Card className="Register-card pt-0 px-xs-3 mb-5 align-items-center justify-content-center">
               <div className="title-container">
@@ -59,6 +63,11 @@ export default function ResetPassword() {
                 
                 <Col xs={12} md={12} lg={12}>
                   <Form onSubmit={handleResetPassword}>
+                    {/* Username Display */}
+                    <div className="mb-3 custom-font ">
+                      <strong className="fs-5">Username: {userEmail.split('@')[0]}</strong>
+                    </div>
+
                     <Form.Group className="mb-3 custom-font" controlId="formPassword">
                       <Form.Label>New Password</Form.Label>
                       <div className="position-relative">

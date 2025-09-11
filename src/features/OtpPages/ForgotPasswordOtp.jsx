@@ -30,7 +30,7 @@ export default function ForgotPassword() {
     const enteredCode = code.join('');
     if (enteredCode.length === 6) {
       toast.success(`Code verified: ${enteredCode}`);
-      navigate('/reset-password');
+      navigate('/reset-password', { state: { email } });
     } else {
       toast.error("Please enter the full 6-digit code.");
     }

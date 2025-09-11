@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Card, Image } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useRef} from "react";
@@ -11,6 +11,7 @@ export default function TwoFactorAuth() {
   const location = useLocation();
   const email = location.state?.email || "";
   const toastShown = useRef(false);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
