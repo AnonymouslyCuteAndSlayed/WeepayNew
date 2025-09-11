@@ -45,9 +45,11 @@ export default function Register() {
     document.title = "WSS | Register";
   }, []);
 
+  // Inline style for forcing overflow on smaller screens
+  
   return (
-    <div className="position-relative vh-100 overflow-auto overflow-xl-visible">
-      <Container fluid className="min-vh-100">
+    <div className="position-relative vh-100 overflow-auto">
+      <Container fluid>
         {/* Header Row */}
         <AuthPageHeader />
 

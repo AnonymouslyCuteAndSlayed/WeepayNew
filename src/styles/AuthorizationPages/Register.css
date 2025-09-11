@@ -2,7 +2,7 @@
 
 *{
   font-family: 'Poppins', sans-serif;
-  overflow: auto;
+  
 }
 
 
@@ -24,7 +24,7 @@
   max-width: 1000px;
   width: 100%;
   border-radius: 50px;
-  overflow: hidden;
+  overflow: auto;
   padding: 0;
   border-radius: 1.5rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);

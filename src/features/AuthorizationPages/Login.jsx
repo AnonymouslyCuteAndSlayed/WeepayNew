@@ -32,13 +32,13 @@ export default function Login() {
   }, []);
 
   return (
-    <div className="position-relative vh-100 overflow-auto overflow-lg-visible">
+    <div className="position-relative vh-100 overflow-auto ">
       <Container fluid className="min-vh-100">
         {/* Header Row */}
         <AuthPageHeader />
 
         {/* Centered Login Card */}
-        <Row className="justify-content-center align-items-center vh-75">
+        <Row className="justify-content-center align-items-center">
           <Col xs={11} md={9} lg={6}>
             <Card className="login-card pt-0 px-xs-3 mb-5 p-md-0 p-0">
               <Card.Body>
