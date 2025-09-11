@@ -7,6 +7,7 @@ import ForgotPassword from "../features/OtpPages/ForgotPasswordOtp.jsx";
 import TwoFactorAuth from "../features/OtpPages/TwoFactorAuth.jsx";
 import ResetPassword from "../features/OtpPages/ResetPassword.jsx";
 import Sidebar from "../common/navs/Sidebar/sidebar.jsx";
+import InvoiceReport from "../features/AuthorizationPages/invoice.jsx";
 
 
 export default function Router() {
@@ -19,6 +20,7 @@ export default function Router() {
       <Route path="/two-factor-auth" element={<TwoFactorAuth />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/sidebar" element={<Sidebar />} />
+      <Route path="/invoice" element={<InvoiceReport />} />
     </Routes>
   );
 }

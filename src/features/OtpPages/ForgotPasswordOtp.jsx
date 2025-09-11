@@ -12,7 +12,7 @@ export default function ForgotPassword() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Weepay Proposal Calculator | Forgot Password";
+    document.title = "WSS | Forgot Password";
   }, []);
 
   const handleForgotPassword = (e) => {

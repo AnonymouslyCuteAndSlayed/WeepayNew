@@ -39,7 +39,7 @@ export default function ResetPassword() {
   };
 
   useEffect(() => {
-    document.title = "Weepay Proposal Calculator | Reset Password";
+    document.title = "WSS | Reset Password";
   }, []);
 
   return (
