@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+.header {
+  background-color: white;
+}
+
+.Logo {
+  max-height: 60px;
+}
+
+.companyName h2 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.forgot-card {
+  max-width: 800px;
+  width: 100%;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: #F8F8F8 !important;
+}
+
+.title-container {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+}
+
+.title-text {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.otpText {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.resetText {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 0;
+}
+
+.custom-font {
+  font-size: 12px;
+}
+
+.custom-font::placeholder {
+  font-size: 12px;
+}
+
+.custom-input.form-control {
+  background-color: #F0EDED !important;
+}
+
+.forgotButton {
+  background-color: #005CBD !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+}
+
+.digitInput {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+@media (max-width: 768px) {
+  .forgot-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .resetText {
+    font-size: 1rem;
+  }
+
+  .otpText {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 391px) {
+  .companyName h2 {
+    font-size: 12px;
+  }
+  .Logo {
+    max-height: 30px;
+  }
+
+  .otpText {
+    font-size: 1.5rem;
+  }
+}
