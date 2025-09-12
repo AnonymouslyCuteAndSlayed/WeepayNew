@@ -1,9 +1,45 @@
 
+        /* main style */
+
         .main-content {
           flex: 1;
           padding: 2rem;
           overflow-y: auto;
-          
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          gap: 1rem;
+          font-style:'Arial', sans-serif;
+;
+        }
+
+        .row1 {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+
+        .col1 {
+          display: grid;
+          grid-template-rows: 1fr 1fr 1fr;
+          gap: 1rem;
+        }
+
+        .subrow3 {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+
+        .col2 {
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          gap: 1rem;
+        }
+
+        .row2 {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 1rem;
         }
 
         .main-content h1 {
@@ -19,6 +55,10 @@
           line-height: 1.6;
           margin-bottom: 2rem;
         }
+
+        /* welcometextSlice style */
+
+        
 
         /* Responsive Design */
         @media (max-width: 768px) {

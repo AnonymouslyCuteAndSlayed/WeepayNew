@@ -80,6 +80,7 @@ body {
   overflow: hidden;
   z-index: 1000;
   padding:0px 5px;
+  height: 100vh;
   
 }
 
