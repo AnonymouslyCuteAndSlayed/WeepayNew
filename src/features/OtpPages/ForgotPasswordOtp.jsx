@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Card, Image } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "../../styles/AuthorizationPages/otpPages.css";
-import AuthPageHeader from "../../common/components/AuthorizationPage/AuthPageHeader.jsx";
+import AuthPageHeader from "../../common/components/AuthorizationPage/authPageheader.jsx";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");

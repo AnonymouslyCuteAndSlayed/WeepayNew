@@ -5,7 +5,7 @@ import { Container, Row, Col, Form, Button, Card, Image } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../styles/AuthorizationPages/Login.css";
-import AuthPageHeader from "../../common/components/AuthorizationPage/AuthPageHeader";
+import AuthPageHeader from "../../common/components/AuthorizationPage/authPageheader";
 
 export default function Login() {
   const [email, setEmail] = useState("");

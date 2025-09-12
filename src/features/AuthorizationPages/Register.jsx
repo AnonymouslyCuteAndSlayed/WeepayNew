@@ -4,14 +4,16 @@ import { Container, Row, Col, Form, Button, Card, Image } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../styles/AuthorizationPages/Register.css";
-import PasswordRequirements from "../../common/components/AuthorizationPage/PasswordRequirements";
-import AuthPageHeader from "../../common/components/AuthorizationPage/AuthPageHeader";
+import PasswordRequirements from "../../common/components/AuthorizationPage/passwordRequirements";
+import AuthPageHeader from "../../common/components/AuthorizationPage/authPageheader";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [userType, setUserType] = useState("");
   const navigate = useNavigate();
 
   const validatePassword = (pwd) => {
@@ -27,6 +29,14 @@ export default function Register() {
     e.preventDefault();
     if (!email.endsWith("@gmail.com")) {
       toast.error("Please enter a valid Gmail address");
+      return;
+    }
+    if (!username.trim()) {
+      toast.error("Username is required");
+      return;
+    }
+    if (!userType) {
+      toast.error("Please select a user type");
       return;
     }
     if (password !== confirmPassword) {
@@ -88,6 +98,39 @@ export default function Register() {
                           className="custom-font userInput"
                         />
                       </Form.Group>
+
+                      <Row>
+                        <Col md={6}>
+                          <Form.Group className="mb-3 custom-font" controlId="formUserType">
+                            <Form.Label>Department</Form.Label>
+                            <Form.Select
+                              value={userType}
+                              onChange={(e) => setUserType(e.target.value)}
+                              required
+                              className="custom-font userInput"
+                            >
+                              <option value="">Select Department</option>
+                              <option value="IT">IT</option>
+                              <option value="Finance">Finance</option>\
+                              <option value="guest">Guest</option>
+
+                            </Form.Select>
+                          </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                          <Form.Group className="mb-3 custom-font" controlId="formUsername">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control
+                              type="text"
+                              placeholder="Enter username"
+                              value={username}
+                              onChange={(e) => setUsername(e.target.value)}
+                              required
+                              className="custom-font userInput"
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
 
                       <Form.Group className="mb-3 custom-font" controlId="formPassword">
                         <Form.Label>Password</Form.Label>

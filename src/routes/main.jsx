@@ -1,8 +1,8 @@
 // src/router.jsx
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "../features/AuthorizationPages/Login.jsx";
-import Register from "../features/AuthorizationPages/Register.jsx";
+import Login from "../features/AuthorizationPages/login.jsx";
+import Register from "../features/AuthorizationPages/register.jsx";
 import ForgotPassword from "../features/OtpPages/ForgotPasswordOtp.jsx";
 import TwoFactorAuth from "../features/OtpPages/TwoFactorAuth.jsx";
 import ResetPassword from "../features/OtpPages/ResetPassword.jsx";

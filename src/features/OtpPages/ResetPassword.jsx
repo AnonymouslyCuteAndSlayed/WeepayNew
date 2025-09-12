@@ -4,8 +4,8 @@ import { Container, Row, Col, Form, Button, Card, Image } from "react-bootstrap"
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../styles/AuthorizationPages/Register.css"; // Reusing the same CSS for consistency
-import PasswordRequirements from "../../common/components/AuthorizationPage/PasswordRequirements.jsx";
-import AuthPageHeader from "../../common/components/AuthorizationPage/AuthPageHeader.jsx";
+import PasswordRequirements from "../../common/components/AuthorizationPage/passwordRequirements.jsx";
+import AuthPageHeader from "../../common/components/AuthorizationPage/authPageheader.jsx";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");

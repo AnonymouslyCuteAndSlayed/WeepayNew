@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, Button, Card, Image } from "react-bootstrap"
 import { toast } from "react-toastify";
 import { useRef} from "react";
 import "../../styles/AuthorizationPages/otpPages.css"; // Reusing the same CSS for consistency
-import AuthPageHeader from "../../common/components/AuthorizationPage/AuthPageHeader.jsx";
+import AuthPageHeader from "../../common/components/AuthorizationPage/authPageheader.jsx";
 
 export default function TwoFactorAuth() {
   const [code, setCode] = useState(['', '', '', '', '', '']);
