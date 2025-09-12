@@ -67,13 +67,14 @@ const navigationItems = [
   }
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ activeItem, onNavItemClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [activeItem, setActiveItem] = useState('dashboard');
   const [hasNotifications, setHasNotifications] = useState(true); // Example: has unread notifications
 
   const toggleSidebar = () => setIsExpanded(!isExpanded);
-  const handleNavItemClick = (id) => setActiveItem(id);
+  const handleNavItemClick = (id) => {
+    if (onNavItemClick) onNavItemClick(id);
+  };
   const handleNotificationClick = () => {
     setHasNotifications(!hasNotifications);
     alert(hasNotifications ? 'You have new notifications!' : 'No new notifications');
@@ -123,7 +124,6 @@ const Sidebar = () => {
       </nav>
 
       {/* Main Content */}
-      <main className="main-content"></main>
     </div>
   );
 };
