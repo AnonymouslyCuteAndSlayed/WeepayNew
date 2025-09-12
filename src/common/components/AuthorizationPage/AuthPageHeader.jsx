@@ -1,3 +1,4 @@
+//Authentication Page Header Component
 import { Row, Col, Image } from "react-bootstrap";
 
 export default function AuthPageHeader() {

@@ -1,3 +1,4 @@
+//Password Requirements Component
 import { Image } from "react-bootstrap";
 
 // Component to display password requirements and their validation status

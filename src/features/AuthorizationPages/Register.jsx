@@ -66,7 +66,7 @@ export default function Register() {
         {/* Centered Register Card */}
         <Row className="justify-content-center align-items-center py-4 ">
           <Col xs={11} md={9} lg={8}>
-            <Card className="Register-card pt-0 px-xs-3 mb-5 align-items-center justify-content-center">
+            <Card className="Register-card pt-0 px-xs-3 mb-5 align-items-center justify-content-center border-0">
               <Card.Body>
                 <div className="title-container">
                   <div className="title-text">

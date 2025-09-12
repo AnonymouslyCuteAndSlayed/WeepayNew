@@ -40,7 +40,7 @@ export default function Login() {
         {/* Centered Login Card */}
         <Row className="justify-content-center align-items-center">
           <Col xs={11} md={9} lg={6}>
-            <Card className="login-card pt-0 px-xs-3 mb-5 p-md-0 p-0">
+            <Card className="login-card pt-0 px-xs-3 mb-5 p-md-0 p-0 border-0">
               <Card.Body>
                 <div className="title-container">
                   <div className="title-text">

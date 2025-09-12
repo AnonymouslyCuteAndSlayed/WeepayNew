@@ -1,4 +1,4 @@
-/* Sidebar.css */
+/* Header styles */
 * {
   margin: 0;
   padding: 0;
@@ -24,32 +24,9 @@ body {
   margin-left: -5px;
 }
 
-.menu-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.menu-toggle:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: scale(1.05);
-}
-
-.menu-toggle svg {
-  width: 24px;
-  height: 24px;
-  stroke: black;
-  transition: transform 0.3s ease;
-  margin-right: 10px;
-}
-
-.notification-btn {
+.menu-toggle,
+.notification-btn,
+.message-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -64,16 +41,11 @@ body {
   justify-content: right;
 }
 
-.notification-btn:hover {
+.menu-toggle:hover,
+.notification-btn:hover,
+.message-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   transform: scale(1.05);
-}
-
-.notification-btn svg {
-  width: 24px;
-  height: 24px;
-  stroke: black;
-  transition: all 0.3s ease;
 }
 
 .notification-dot {
@@ -94,6 +66,8 @@ body {
   font-weight: bold;
   color: black;
 }
+
+/* Sidebar Styles */
 
 .sidebar {
   position: absolute;
@@ -222,14 +196,11 @@ body {
   margin-left: 250px;
 }
 
+
 @media (max-width: 767px) {
-  
   .menu-title {
     font-size: 12px;
   }
-}
-
-@media (max-width: 767px) {
   .sidebar {
     width: 0;
     opacity: 0;
@@ -249,5 +220,16 @@ body {
   
   .sidebar.expanded ~ .main-content {
     margin-left: 200px;
+  }
+
+  .message-btn {
+    width: 35px;
+    margin-right: auto;
+  }
+
+  .notification-btn {
+      width: 35px;
+      margin-right: 0;
+
   }
 }

@@ -3,11 +3,14 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../features/AuthorizationPages/login.jsx";
 import Register from "../features/AuthorizationPages/register.jsx";
-import ForgotPassword from "../features/OtpPages/ForgotPasswordOtp.jsx";
-import TwoFactorAuth from "../features/OtpPages/TwoFactorAuth.jsx";
-import ResetPassword from "../features/OtpPages/ResetPassword.jsx";
+import ForgotPassword from "../features/OtpPages/forgotPasswordotp.jsx";
+import TwoFactorAuth from "../features/OtpPages/twoFactorauth.jsx";
+import ResetPassword from "../features/OtpPages/resetPassword.jsx";
 import Sidebar from "../common/navs/Sidebar/sidebar.jsx";
 import InvoiceReport from "../features/AuthorizationPages/invoice.jsx";
+
+
+
 
 
 export default function Router() {

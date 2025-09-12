@@ -125,7 +125,7 @@ export default function ForgotPassword() {
 
                       <Button 
                         variant="outline-secondary" 
-                        className="w-100 mt-2" 
+                        className="w-100 mt-2 custom-font" 
                         onClick={() => setIsEmailSent(false)}
                       >
                         Back to Email Entry

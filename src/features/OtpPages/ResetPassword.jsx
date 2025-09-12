@@ -43,7 +43,7 @@ export default function ResetPassword() {
   }, []);
 
   return (
-    <div className="position-relative">
+    <div className="position-relative  vh-100 overflow-auto ">
       <Container fluid className="vh-100">
         {/* Header Row */}
         <AuthPageHeader />
@@ -51,7 +51,7 @@ export default function ResetPassword() {
         {/* Centered Reset Password Card */}
         <Row className="justify-content-center align-items-center vh-75 mb-5">
           <Col xs={11} md={9} lg={5}>
-            <Card className="Register-card pt-0 px-xs-3 mb-5 align-items-center justify-content-center">
+            <Card className="Register-card pt-0 px-xs-3 mb-5 align-items-center justify-content-center border-0">
               <div className="title-container">
                 <div className="title-text">
                   <h5 className="welcome-text">Reset Your</h5>
