@@ -24,6 +24,12 @@
           gap: 1rem;
         }
 
+        .greetingsText {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+}
+
+
         .subrow3 {
           display: grid;
           grid-template-columns: 1fr 1fr;

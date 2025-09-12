@@ -30,7 +30,7 @@ export default function TwoFactorAuth() {
     const enteredCode = code.join('');
     if (enteredCode.length === 6) {
       toast.success(`Code verified: ${enteredCode}`);
-      // Here you would typically verify the code and navigate to the next page
+      navigate('/dashboard');
     } else {
       toast.error("Please enter the full 6-digit code.");
     }

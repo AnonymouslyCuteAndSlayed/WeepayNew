@@ -20,6 +20,7 @@ export default function Login() {
       return;
     }
     if (email && password) {
+      localStorage.setItem('userEmail', email);
       // Navigate to TwoFactorAuth page with email
       navigate("/two-factor-auth", { state: { email } });
     } else {

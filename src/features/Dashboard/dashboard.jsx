@@ -4,7 +4,9 @@ import "../../styles/dashboard/dashboard.css";
 
 function Dashboard() {
   const [activeItem, setActiveItem] = useState('dashboard');
-  
+  const email = localStorage.getItem('userEmail');
+  const name = email ? email.split('@')[0] : 'User';
+
   const handleNavItemClick = (itemId) => {
     setActiveItem(itemId);
     console.log(`Navigated to: ${itemId}`);
@@ -19,8 +21,9 @@ function Dashboard() {
         />
         <div className="content-wrapper">
           <main className="main-content">
-            <div className="row1">
-                    <p>Dashboard</p> <br></br>
+            <div className="greetingsText">
+                    <p>Dashboard</p>  
+                    <h1>Hello, {name}</h1>
 
               <div className="col1">
                 <div className="subrow1">
