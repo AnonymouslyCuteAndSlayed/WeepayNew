@@ -1,7 +1,6 @@
-# TODO: Create Sidebar and Header for Dashboard
+# TODO: Fix Logout Button at Bottom of Sidebar
 
-- [x] Create SidebarHeader component in src/components/SidebarHeader.jsx
-- [x] Update src/pages/Dashboard.jsx to import and render SidebarHeader
-- [x] Add styles in src/styles/Dashboard.css
-- [x] Update src/router.jsx to add /dashboard route
-- [x] Test: Fixed layout - header on top, sidebar on left, main on right (no collapsing)
+- [ ] Edit src/common/navs/Sidebar/sidebar.jsx to render logout button separately from other nav items in a logout-container div
+- [ ] Edit src/styles/common/navs/sidebar/sidebar.css to add styles for logout-container (position: absolute; bottom: 20px; left: 5px; right: 5px;) and remove margin-top from .logoutIcon
+- [ ] Remove className:'logoutIcon' from logout item in navigationItems array in sidebar.jsx
+- [ ] Test the sidebar to ensure logout button is fixed at bottom and functionality works

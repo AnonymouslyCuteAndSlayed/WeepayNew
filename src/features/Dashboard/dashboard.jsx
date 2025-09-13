@@ -22,7 +22,7 @@ function Dashboard() {
         <div className="content-wrapper">
           <main className="main-content">
             <div className="greetingsText">
-                    <p>Dashboard</p>  
+                    <h4>Dashboard</h4>  
                     <h1>Hello, {name}</h1>
 
               <div className="col1">

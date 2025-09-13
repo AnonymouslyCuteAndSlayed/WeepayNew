@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import '../../../styles/common/navs/sidebar/sidebar.css'; // Import your CSS
-import { 
-  FolderClock, 
-  LayoutDashboard, 
-  UsersRound, 
-  FolderKanban, 
-  Receipt, 
-  Trash2, 
-  MessageCircle, 
-  FileClock, 
-  Bell, 
-  Menu, 
-  TextAlignStart 
+import {
+  FolderClock,
+  LayoutDashboard,
+  UsersRound,
+  FolderKanban,
+  Receipt,
+  Trash2,
+  MessageCircle,
+  FileClock,
+  Bell,
+  Menu,
+  TextAlignStart,
+  LogOut
 } from 'lucide-react';
 
 // Icons
@@ -63,6 +64,13 @@ const navigationItems = [
     title: 'Activity Logs',
     icon: (
       <FileClock />
+    )
+  },
+  {
+    id: 'Logout',
+    title: 'Logout',
+    icon: (
+      <LogOut />
     )
   }
 ];
@@ -120,6 +128,7 @@ const Sidebar = ({ activeItem, onNavItemClick }) => {
               <span className="nav-text">{item.title}</span>
             </button>
           ))}
+          
         </div>
       </nav>
 

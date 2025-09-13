@@ -12,9 +12,6 @@ import Sidebar from "../common/navs/Sidebar/sidebar.jsx";
 import ProfilePicture from "../features/ProfilePictureSettings/changeProfileSettings.jsx";
 
 
-
-
-
 export default function Router() {
   return (
     <Routes>
