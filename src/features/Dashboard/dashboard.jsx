@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Sidebar from '../../common/navs/Sidebar/sidebar.jsx';
 import "../../styles/dashboard/dashboard.css";
+import { mdiHandWaveOutline, mdiAccount } from "@mdi/js";
+import Icon from '@mdi/react';
+
 
 function Dashboard() {
   const [activeItem, setActiveItem] = useState('dashboard');
@@ -22,12 +25,14 @@ function Dashboard() {
         <div className="content-wrapper">
           <main className="main-content">
             <div className="greetingsText">
-                    <h4>Dashboard</h4>  
-                    <h1>Hello, {name}</h1>
+                    <h4>Dashboard</h4>
+                    <h1 className='fw-bold'>Hello, {name} <span className="username-icon">
+                      <Icon path={mdiHandWaveOutline} size={1.5} />
+                    </span></h1>
 
-              <div className="col1">
-                <div className="subrow1">
-                  {/* Content for subrow1 */}
+              <div className="numberContainer">
+                <div className="numberPart">
+                  
                 </div>
                 <div className="subrow2">
                   {/* Content for subrow2 */}
