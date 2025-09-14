@@ -1,75 +1,279 @@
-
-        /* main style */
-
-        .main-content {
-          flex: 1;
-          padding: 2rem;
-          overflow-y: auto;
-          display: grid;
-          grid-template-rows: 1fr 1fr;
-          gap: 1rem;
-          font-style:'Arial', sans-serif;
-;
-        }
-
-        .row1 {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-        }
-
-        .col1 {
-          display: grid;
-          grid-template-rows: 1fr 1fr 1fr;
-          gap: 1rem;
-        }
-
-        .greetingsText {
+/* Main dashboard layout */
+.dashboard-container {
+  background: #ede9e6;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column; /* stack vertically */
 }
 
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
-        .subrow3 {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-        }
+.main-content {
+  flex: 1;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-family: 'Arial', sans-serif;
+  background: #ede9e6;
+}
 
-        .col2 {
-          display: grid;
-          grid-template-rows: 1fr 1fr;
-          gap: 1rem;
-        }
+/* Greeting section */
+.greetings {
+  margin-bottom: 0.5rem;
+}
 
-        .row2 {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 1rem;
-        }
+.greetings h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
 
-        .main-content h1 {
-          color: #333;
-          font-size: 2.5rem;
-          margin-bottom: 1rem;
-          font-weight: 600;
-        }
+.greetings h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
 
-        .main-content p {
-          color: #666;
-          font-size: 1.1rem;
-          line-height: 1.6;
-          margin-bottom: 2rem;
-        }
+.username-icon {
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
 
-        /* welcometextSlice style */
+/* Row 1: Stats + Activities */
+.row.row-top {
+  display: grid;
+  grid-template-columns: 2.5fr 1.2fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
 
-        
+.top-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-         
-          .main-content h1 {
-            font-size: 2rem;
-          }
-        }
+.stat-box {
+  background: #fff;
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  width: 200px;           /* Customizable width */
+  height: 80px;          /* Customizable height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for stat-box */
+
+
+.stat-box p {
+  font-size: 12px;
+  margin: 0.5rem 0 0.2rem 0;
+  font-weight: 500;
+  color: #666;
+  align-items: left;
+  justify-content: left;
+}
+
+.stat-box h3 {
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Alternative stat-box sizes */
+.stat-box.small {
+  width: 160x;
+  height: 100px;
+  padding: 1rem 0.8rem;
+}
+
+.stat-box.small h3 {
+  font-size: 1.5rem;
+}
+
+.stat-box.small p {
+  font-size: 0.9rem;
+}
+
+.stat-box.large {
+  width: 220px;
+  height: 140px;
+  padding: 2rem 1.2rem;
+}
+
+.stat-box.large h3 {
+  font-size: 2.2rem;
+}
+
+.stat-box.large p {
+  font-size: 1.1rem;
+}
+
+.stat-box.wide {
+  width: 250px;
+  height: 120px;
+}
+
+.stat-box.tall {
+  width: 180px;
+  height: 160px;
+}
+
+.activities-feed {
+  background: #fff;
+  padding: 1.2rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  min-height: 340px;
+  max-height: 600px;
+  width: 100%;         /* Take full grid column width */
+  min-width: 320px;    /* Set a minimum width */
+  display: flex;
+  flex-direction: column;
+}
+
+.activities-feed h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.activities-feed p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.7rem;
+}
+
+/* Row 2: Revenue Growth */
+.row.row-revenue {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+}
+
+.revenue-box {
+  background: #fff;
+  padding: 1.2rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.revenue-box h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.revenue-box p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Row 3: Monthly Overview */
+.row.row-overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.overview-box {
+  background: #fff;
+  padding: 1.2rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  min-height: 120px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.overview-box h5 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Remove unused styles for clarity */
+.numberWrapper, .numberPart, .rectangle-box, .tall-rectangle, .tall-content {
+  display: none;
+}
+
+/* Row 1: Stats + Activities */
+.row.row-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Make right column narrower */
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* Stack stats and revenue vertically in left column */
+.row.row-top > .left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Place activities-feed in right column */
+.row.row-top > .activities-feed {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+/* Top stats grid */
+.top-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
+
+/* Revenue row inside left column */
+.row.row-revenue {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  margin-top: 0; /* Remove extra spacing */
+}
+
+/* Responsive adjustments for stat-box */
+@media (max-width: 1200px) {
+  .stat-box {
+    width: 200px;
+    height: 50px;
+  }
+  
+  .stat-box h3 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .stat-box {
+    width: 140px;
+    height: 100px;
+  }
+  
+  .stat-box h3 {
+    font-size: 1.4rem;
+  }
+}
