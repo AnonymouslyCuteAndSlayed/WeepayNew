@@ -15,7 +15,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container pe-1">
       <Sidebar
         activeItem={activeItem}
         onNavItemClick={handleNavItemClick}
@@ -59,7 +59,7 @@ function Dashboard() {
               </div>
             </div>
 
-            <div className="activities-feed">
+            <div className="activities-feed me-md-4">
               <h4>Recent Activities Feed</h4>
               <p>See what others are doing!</p>
               {/* Activity items here */}

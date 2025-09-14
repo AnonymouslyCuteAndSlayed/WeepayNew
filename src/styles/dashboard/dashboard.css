@@ -3,6 +3,7 @@
   background: #ede9e6;
   min-height: 100vh;
   display: flex;
+  
 }
 
 .content-wrapper {
@@ -144,6 +145,7 @@
   min-width: 320px;    /* Set a minimum width */
   display: flex;
   flex-direction: column;
+  margin-right: 20px;
 }
 
 .activities-feed h4 {
@@ -264,6 +266,11 @@
 }
 
 @media (max-width: 768px) {
+
+  .dashboard-container {
+    min-width: 100px;
+    overflow-x: auto;
+  }
   .top-stats {
     grid-template-columns: repeat(2, 1fr);
   }
