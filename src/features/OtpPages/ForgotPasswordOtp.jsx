@@ -9,11 +9,26 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "WSS | Forgot Password";
   }, []);
+
+  useEffect(() => {
+    if (isEmailSent) {
+      setTimeLeft(300);
+    }
+  }, [isEmailSent]);
+
+  useEffect(() => {
+    if (timeLeft === 0 || !isEmailSent) return;
+    const timerId = setInterval(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, [timeLeft, isEmailSent]);
 
   const handleForgotPassword = (e) => {
     e.preventDefault();
@@ -34,6 +49,18 @@ export default function ForgotPassword() {
     } else {
       toast.error("Please enter the full 6-digit code.");
     }
+  };
+
+  const handleResend = () => {
+    setTimeLeft(300);
+    setCode(['', '', '', '', '', '']); // Reset code input
+    toast.success("OTP resent to your email");
+  };
+  // Format timeLeft as mm:ss
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
   };
 
   return (
@@ -119,10 +146,30 @@ export default function ForgotPassword() {
                         </Row>
                       </Form.Group>
 
-                      <Button variant="primary" type="submit" className="forgotButton w-100">
+                      {/* Timer display */}
+                      <div className="text-center mb-3 custom-font timerText">
+                        Time left: {formatTime(timeLeft)}
+                      </div>
+
+                      {timeLeft === 0 && (
+                        <div className="text-center mb-3 d-flex flex-column align-items-start">
+                          <p className="custom-font mb-0">Did not receive OTP?</p>
+                          <Button
+                            variant="link"
+                            onClick={handleResend}
+                            className="p-0 custom-font"
+                          >
+                            Resend OTP
+                          </Button>
+                        </div>
+                      )}
+
+
+                      <Button variant="primary" type="submit" className="forgotButton w-100" disabled={timeLeft === 0}>
                         Verify Code
                       </Button>
 
+                     
                       <Button 
                         variant="outline-secondary" 
                         className="w-100 mt-2 custom-font" 

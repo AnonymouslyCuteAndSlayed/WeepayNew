@@ -49,6 +49,7 @@
   font-size: 2rem;
   font-weight: bold;
   color: #000;
+
 }
 
 .resetText {
@@ -57,8 +58,17 @@
   margin-bottom: 0;
 }
 
+.resendButton {
+  background: none;
+  border: none; 
+  color: blue;
+  cursor: pointer;
+  font-size: 12px;
+}
+
 .custom-font {
   font-size: 12px;
+  
 }
 
 .custom-font::placeholder {
@@ -81,6 +91,11 @@
   font-size: 20px;
   border-radius: 8px;
   border: 1px solid #ccc;
+}
+
+.timerText {
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 @media (max-width: 768px) {

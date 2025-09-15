@@ -13,17 +13,27 @@ export default function TwoFactorAuth() {
   const toastShown = useRef(false);
   const navigate = useNavigate();
 
+  // Timer state and effect
+  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
 
   useEffect(() => {
-  if (email && !toastShown.current) {
-    toast.success(`Verification code sent to: ${email}`);
-    toastShown.current = true;
-  }
-}, [email]);
+    if (email && !toastShown.current) {
+      toast.success(`Verification code sent to: ${email}`);
+      toastShown.current = true;
+    }
+  }, [email]);
 
   useEffect(() => {
     document.title = "Weepay Proposal Calculator | Two-Factor Authentication";
   }, []);
+
+  useEffect(() => {
+    if (timeLeft === 0) return;
+    const timerId = setInterval(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, [timeLeft]);
 
   const handleVerify = (e) => {
     e.preventDefault();
@@ -34,6 +44,18 @@ export default function TwoFactorAuth() {
     } else {
       toast.error("Please enter the full 6-digit code.");
     }
+  };
+
+  const handleResend = () => {
+    setTimeLeft(300);
+    toast.success("OTP resent to your email");
+  };
+
+  // Format timeLeft as mm:ss
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
   };
 
   return (
@@ -96,11 +118,25 @@ export default function TwoFactorAuth() {
                           </Col>
                         ))}
                       </Row>
-                    </Form.Group>
+                  </Form.Group>
 
-                    <Button variant="primary" type="submit" className="forgotButton w-100">
+                    {/* Timer display */}
+                    <div className="text-center mb-3 custom-font" style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                      Time left: {formatTime(timeLeft)}
+                    </div>
+
+                    <Button variant="primary" type="submit" className="forgotButton w-100" disabled={timeLeft === 0}>
                       Verify
                     </Button>
+
+                    {timeLeft === 0 && (
+                      <div className="text-center mt-2">
+                        <span>Did not receive OTP? </span>
+                        <Button variant="link" onClick={handleResend} className="p-0">
+                          Resend
+                        </Button>
+                      </div>
+                    )}
                   </Form>
 
                   <div className="custom-font text-center mt-4">
