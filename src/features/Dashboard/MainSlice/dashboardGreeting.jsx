@@ -5,7 +5,7 @@ import Icon from '@mdi/react';
 
 function dashboardGreeting({ name }) {
   return (
-    <Col lg={8} md={12} className="greetings ">
+    <div>
       <h5 className="dashboard-title">
         Dashboard
       </h5>
@@ -15,7 +15,7 @@ function dashboardGreeting({ name }) {
           <Icon path={mdiHandWaveOutline} size={1.5} />
         </span>
       </h1>
-    </Col>
+    </div>
   );
 }
 

@@ -1,140 +1,162 @@
-import React, { useState, useEffect } from 'react';
-import '../../../styles/common/navs/sidebar/sidebar.css'; // Import your CSS
+import React, { useState } from "react";
+import "../../../styles/common/navs/sidebar/sidebar.css";
 import {
-  FolderClock,
   LayoutDashboard,
   UsersRound,
+  FolderClock,
   FolderKanban,
   Receipt,
   Trash2,
-  MessageCircle,
   FileClock,
-  Bell,
   Menu,
   TextAlignStart,
-  LogOut
-} from 'lucide-react';
+  LogOut,
+} from "lucide-react";
 
-// Icons
 const navigationItems = [
   {
-    id: 'dashboard',
-    title: 'Dashboard',
-    icon: (
-      <LayoutDashboard />
-    )
+    id: "dashboard",
+    title: "Dashboard",
+    icon: <LayoutDashboard />,
+    type: "main",
   },
   {
-    id: 'client-records',
-    title: 'Client Records',
-    icon: (
-      <UsersRound />
-    )
+    id: "records",
+    title: "Records",
+    icon: <FolderKanban />,
+    type: "parent",
+    children: [
+      { id: "client-records", title: "Clients", icon: <UsersRound /> },
+      { id: "proposals", title: "Proposal", icon: <FolderClock /> },
+      { id: "projects", title: "Project", icon: <FolderKanban /> },
+      { id: "invoice", title: "Invoice", icon: <Receipt /> },
+      { id: "trash", title: "Deleted", icon: <Trash2 /> },
+    ],
   },
   {
-    id: 'proposals',
-    title: 'Proposal Records',
-    icon: (
-      <FolderClock />
-    )
+    id: "activity",
+    title: "Activity Logs",
+    icon: <FileClock />,
+    type: "main",
   },
   {
-    id: 'projects',
-    title: 'Project Records',
-    icon: (
-      <FolderKanban />
-    )
+    id: "logout",
+    title: "Logout",
+    icon: <LogOut />,
+    type: "main",
   },
-  {
-    id: 'Invoice',
-    title: 'Invoice Records',
-    icon: (
-      <Receipt />
-    )
-  },
-  {
-    id: 'Trash',
-    title: 'Deleted Records',
-    icon: (
-      <Trash2 />
-    )
-  },
-  {
-    id: 'Activity',
-    title: 'Activity Logs',
-    icon: (
-      <FileClock />
-    )
-  },
-  {
-    id: 'Logout',
-    title: 'Logout',
-    icon: (
-      <LogOut />
-    )
-  }
 ];
 
-const Sidebar = ({ activeItem, onNavItemClick }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [hasNotifications, setHasNotifications] = useState(true); // Example: has unread notifications
+const Sidebar = ({ onNavItemClick, onSidebarToggle }) => {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [activeItem, setActiveItem] = useState("");
 
-  const toggleSidebar = () => setIsExpanded(!isExpanded);
-  const handleNavItemClick = (id) => {
-    if (onNavItemClick) onNavItemClick(id);
-  };
-  const handleNotificationClick = () => {
-    setHasNotifications(!hasNotifications);
-    alert(hasNotifications ? 'You have new notifications!' : 'No new notifications');
+  const toggleSidebar = () => {
+    const newExpandedState = !isExpanded;
+    setIsExpanded(newExpandedState);
+    
+    // Notify parent component about sidebar state change
+    if (onSidebarToggle) {
+      onSidebarToggle(newExpandedState);
+    }
   };
 
-  useEffect(() => {
-    document.title = "WSS | Dashboard";
-  }, []);
+  const handleItemClick = (itemId) => {
+    setActiveItem(itemId);
+    if (onNavItemClick) onNavItemClick(itemId);
+  };
 
   return (
-    <div className="h-100">
-      {/* Menu Container */}
-      <div className="menu-container d-flex align-items-center justify-content-between px-3">
-        <div className="left-section d-flex align-items-center">
-          <button className="menu-toggle" onClick={toggleSidebar} aria-label="Toggle sidebar menu">
-            {isExpanded ? <TextAlignStart /> : <Menu />}
-          </button>
-          <span className="menu-title">Weepay Proposal Calculator</span>
-        </div>
-        <div className="right-section d-flex align-items-center">
-          <button className="notification-btn" onClick={handleNotificationClick} aria-label="Notifications">
-            <Bell />
-            {hasNotifications && <span className="notification-dot"></span>}
-          </button>
-          <div>
-            <button className="message-btn" aria-label="messages">
-              <MessageCircle />
-            </button>
-          </div>
-        </div>
-      </div>
+      <>
+          <header className="navs-header">
+      {/* Toggle Menu */}
+      
+      <div className="brand-container">
+                {/* Toggle Menu */}
+                <div className="menuHeader">
+                  <button
+                    className="menuSidebar"
+                    onClick={toggleSidebar}
+                    aria-label="Toggle sidebar menu"
+                  >
+                    {isExpanded ? <TextAlignStart /> : <Menu />}
+                  </button>
+                </div>
 
-      {/* Sidebar */}
-      <nav className={`sidebar ${isExpanded ? 'expanded' : ''}`}>
-        <div className="sidebar-nav">
-          {navigationItems.map((item) => (
-            <button
-              key={item.id}
-              className={`nav-item ${activeItem === item.id ? 'active' : ''}`}
-              onClick={() => handleNavItemClick(item.id)}
-            >
-              <div className="nav-icon">{item.icon}</div>
-              <span className="nav-text">{item.title}</span>
-            </button>
-          ))}
-          
-        </div>
-      </nav>
+                  <img
+                    src="/public/Logos/Logo.png"  
+                    alt="WeePay Logo"
+                    className="brand-logo"
+                  />
+                  <span className="brand-text">Weepay Payment Processing</span>
+                </div>
+              </header>
+                    <div className="d-flex">
+                      {/* Sidebar */}
+                      <div
+                        className={`sidebar ${isExpanded ? "expanded" : "collapsed"}`}
+                        style={{
+                          width: isExpanded ? "240px" : "70px",
+                          minHeight: "100vh",
+                          borderRight: "1px solid #dee2e6",
+                          transition: "width 0.3s ease",
+                        }}
+                      >
+            
+                {/* Navigation */}
+                <div>
+                  <div className="sidebarNavs">
+                    {navigationItems.map((item) =>
+                      item.type === "parent" ? (
+                        <div key={item.id}>
+                          {/* Parent */}
+                          <div
+                            className={`sidebar-btn parent-label ${
+                              item.children.some((c) => c.id === activeItem)
+                                ? "active"
+                                : ""
+                            }`}
+                          >
+                            <span className="iconsActive">{item.icon}</span>
+                            {isExpanded && <span>{item.title}</span>}
+                          </div>
 
-      {/* Main Content */}
-    </div>
-  );
-};
+                          {/* Submenu */}
+                          {isExpanded && (
+                            <div>
+                              {item.children.map((child) => (
+                                <button
+                                  key={child.id}
+                                  className={`sidebar-sub-btn ${
+                                    activeItem === child.id ? "active-sub" : ""
+                                  }`}
+                                  onClick={() => handleItemClick(child.id)}
+                                >
+                                  <span className="subIcons">{child.icon}</span>
+                                  <span>{child.title}</span>
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        // Normal button
+                        <button
+                          key={item.id}
+                          className={`sidebar-btn ${activeItem === item.id ? "active" : ""}`}
+                          onClick={() => handleItemClick(item.id)}
+                        >
+                          <span className="iconsActive">{item.icon}</span>
+                          {isExpanded && <span className="nav-text">{item.title}</span>}
+                        </button>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      };
 
 export default Sidebar;

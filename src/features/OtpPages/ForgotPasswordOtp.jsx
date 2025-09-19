@@ -4,12 +4,15 @@ import { Container, Row, Col, Form, Button, Card, Image } from "react-bootstrap"
 import { toast } from "react-toastify";
 import "../../styles/AuthorizationPages/otpPages.css";
 import AuthPageHeader from "../../common/components/AuthorizationPage/authPageheader.jsx";
+import { useAdminApi } from "../../api/admin/adminApi";
 
 export default function ForgotPassword() {
+  const { forgotPassword } = useAdminApi(); 
   const [email, setEmail] = useState("");
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
+  const [isLoading, setIsLoading] = useState(false); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,14 +33,37 @@ export default function ForgotPassword() {
     return () => clearInterval(timerId);
   }, [timeLeft, isEmailSent]);
 
-  const handleForgotPassword = (e) => {
+  const handleForgotPassword = async (e) => {
     e.preventDefault();
+    
     if (!email.endsWith("@gmail.com")) {
       toast.error("Please enter a valid Gmail address");
       return;
     }
-    toast.success(`Password reset link sent to: ${email}`);
-    setIsEmailSent(true);
+
+    setIsLoading(true);
+    
+    try {
+      const response = await forgotPassword({
+        Email: email  
+      });
+      
+      toast.success(`Password reset code sent to: ${email}`);
+      setIsEmailSent(true);
+      
+    } catch (error) {
+      console.error("Forgot password error:", error);
+      
+      if (error.response?.status === 404) {
+        toast.error("Email not found. Please check your email address.");
+      } else if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Failed to send reset code. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCodeSubmit = (e) => {
@@ -45,6 +71,7 @@ export default function ForgotPassword() {
     const enteredCode = code.join('');
     if (enteredCode.length === 6) {
       toast.success(`Code verified: ${enteredCode}`);
+      // Navigate to reset password page with email
       navigate('/reset-password', { state: { email } });
     } else {
       toast.error("Please enter the full 6-digit code.");
@@ -56,6 +83,7 @@ export default function ForgotPassword() {
     setCode(['', '', '', '', '', '']); // Reset code input
     toast.success("OTP resent to your email");
   };
+
   // Format timeLeft as mm:ss
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60).toString().padStart(2, '0');
@@ -103,8 +131,13 @@ export default function ForgotPassword() {
                         />
                       </Form.Group>
 
-                      <Button variant="primary" type="submit" className="forgotButton w-100">
-                        Send Reset Link
+                      <Button 
+                        variant="primary" 
+                        type="submit" 
+                        className="forgotButton w-100"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? 'Sending...' : 'Send Reset Code'}
                       </Button>
                     </Form>
                   ) : (
@@ -164,12 +197,10 @@ export default function ForgotPassword() {
                         </div>
                       )}
 
-
                       <Button variant="primary" type="submit" className="forgotButton w-100" disabled={timeLeft === 0}>
                         Verify Code
                       </Button>
 
-                     
                       <Button 
                         variant="outline-secondary" 
                         className="w-100 mt-2 custom-font" 

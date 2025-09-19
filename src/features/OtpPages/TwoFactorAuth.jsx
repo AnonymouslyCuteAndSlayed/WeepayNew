@@ -5,11 +5,15 @@ import { toast } from "react-toastify";
 import { useRef} from "react";
 import "../../styles/AuthorizationPages/otpPages.css"; // Reusing the same CSS for consistency
 import AuthPageHeader from "../../common/components/AuthorizationPage/authPageheader.jsx";
+import { useAdminApi } from "../../api/admin/adminApi";
 
 export default function TwoFactorAuth() {
+  const { verifyOtp } = useAdminApi();
   const [code, setCode] = useState(['', '', '', '', '', '']);
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const email = location.state?.email || "";
+  const fromPage = location.state?.from || "login"; // Track which page user came from
   const toastShown = useRef(false);
   const navigate = useNavigate();
 
@@ -35,14 +39,68 @@ export default function TwoFactorAuth() {
     return () => clearInterval(timerId);
   }, [timeLeft]);
 
-  const handleVerify = (e) => {
+  const handleVerify = async (e) => {
     e.preventDefault();
     const enteredCode = code.join('');
-    if (enteredCode.length === 6) {
-      toast.success(`Code verified: ${enteredCode}`);
-      navigate('/dashboard');
-    } else {
+    
+    if (enteredCode.length !== 6) {
       toast.error("Please enter the full 6-digit code.");
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      // Call the verifyOtp API with proper parameters matching your .NET controller
+      const response = await verifyOtp({
+        Email: email,
+        OtpCode: enteredCode,
+        Purpose: fromPage === "register" ? "CreateAccount" : "Login"  // Set purpose based on context
+      });
+      
+      // Handle both possible response formats from your API
+      if (response.IsSuccess || response.isSuccess) {
+        toast.success("Authentication successful!");
+        
+        // Store authentication status if needed
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('userEmail', email);
+        
+        // Navigate based on where user came from
+        if (fromPage === "register" || fromPage === "reset") {
+          if (fromPage === "reset") {
+            toast.success("Password reset successfully");
+          }
+          navigate('/login');
+        } else {
+          navigate('/dashboard');
+        }
+      } else {
+        toast.error("Invalid or expired code. Please try again.");
+        // Reset the code inputs
+        setCode(['', '', '', '', '', '']);
+        // Focus on first input
+        document.getElementById('code-0')?.focus();
+      }
+      
+    } catch (error) {
+      console.error("Two-factor auth error:", error);
+      
+      if (error.response?.status === 400) {
+        toast.error("Invalid or expired verification code.");
+      } else if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Verification failed. Please try again.");
+      }
+      
+      // Reset the code inputs on error
+      setCode(['', '', '', '', '', '']);
+      // Focus on first input
+      document.getElementById('code-0')?.focus();
+      
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -125,18 +183,29 @@ export default function TwoFactorAuth() {
                       Time left: {formatTime(timeLeft)}
                     </div>
 
-                    <Button variant="primary" type="submit" className="forgotButton w-100" disabled={timeLeft === 0}>
-                      Verify
+                    {/* resend otp */}
+                     {timeLeft === 0 && (
+                        <div className="text-center mb-3 d-flex flex-column align-items-start">
+                          <p className="custom-font mb-0">Did not receive OTP?</p>
+                          <Button
+                            variant="link"
+                            onClick={handleResend}
+                            className="p-0 custom-font"
+                          >
+                            Resend OTP
+                          </Button>
+                        </div>
+                      )}
+
+                    <Button 
+                      variant="primary" 
+                      type="submit" 
+                      className="forgotButton w-100" 
+                      disabled={timeLeft === 0 || isLoading}
+                    >
+                      {isLoading ? 'Verifying...' : 'Verify'}
                     </Button>
 
-                    {timeLeft === 0 && (
-                      <div className="text-center mt-2">
-                        <span>Did not receive OTP? </span>
-                        <Button variant="link" onClick={handleResend} className="p-0">
-                          Resend
-                        </Button>
-                      </div>
-                    )}
                   </Form>
 
                   <div className="custom-font text-center mt-4">

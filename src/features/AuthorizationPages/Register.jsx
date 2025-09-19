@@ -6,14 +6,17 @@ import { toast } from "react-toastify";
 import "../../styles/AuthorizationPages/Register.css";
 import PasswordRequirements from "../../common/components/AuthorizationPage/passwordRequirements";
 import AuthPageHeader from "../../common/components/AuthorizationPage/authPageheader";
+import { useAdminApi } from "../../api/admin/adminApi";
 
 export default function Register() {
+  const { createAccount } = useAdminApi(); // Added destructured createAccount
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [userType, setUserType] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Added missing isLoading state
   const navigate = useNavigate();
 
   const validatePassword = (pwd) => {
@@ -25,8 +28,9 @@ export default function Register() {
     return isLength && isUpper && isLower && isNumber && isSpecial;
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => { // Added async keyword
     e.preventDefault();
+    
     if (!email.endsWith("@gmail.com")) {
       toast.error("Please enter a valid Gmail address");
       return;
@@ -47,16 +51,43 @@ export default function Register() {
       toast.error("Password does not meet the requirements");
       return;
     }
-    // Navigate to TwoFactorAuth page with email
-    navigate("/two-factor-auth", { state: { email } });
+
+    setIsLoading(true);
+    
+    try {
+      // Call the API with proper parameter names matching your .NET CreateUserCommand
+      const response = await createAccount({
+        Department: userType,     // Note: Capital 'D' to match .NET model
+        Email: email,            // Note: Capital 'E' to match .NET model
+        Username: username,      // Note: Capital 'U' to match .NET model
+        Password: password,      // Note: Capital 'P' to match .NET model
+        ConfirmPassword: confirmPassword  // Note: Capital 'C' to match .NET model
+      });
+      
+      toast.success("Account created successfully! Please check your email for verification code.");
+      
+      // Navigate to TwoFactorAuth page with email and from parameter
+      navigate("/two-factor-auth", { state: { email, from: "register" } });
+      
+    } catch (error) {
+      console.error("Registration error:", error);
+      
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else if (error.message?.includes("Email is already registered")) {
+        toast.error("This email is already registered. Please use a different email or try logging in.");
+      } else {
+        toast.error("Registration failed. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
     document.title = "WSS | Register";
   }, []);
 
-  // Inline style for forcing overflow on smaller screens
-  
   return (
     <div className="position-relative vh-100 overflow-auto">
       <Container fluid>
@@ -111,9 +142,8 @@ export default function Register() {
                             >
                               <option value="">Select Department</option>
                               <option value="IT">IT</option>
-                              <option value="Finance">Finance</option>\
+                              <option value="Finance">Finance</option>
                               <option value="guest">Guest</option>
-
                             </Form.Select>
                           </Form.Group>
                         </Col>
@@ -170,8 +200,9 @@ export default function Register() {
                         variant="primary"
                         type="submit"
                         className="loginButton w-100 mt-3"
+                        disabled={isLoading}
                       >
-                        Register
+                        {isLoading ? 'Creating Account...' : 'Register'}
                       </Button>
                       <div className="custom-font text-center mt-4">
                         <span>Already have an account? </span>

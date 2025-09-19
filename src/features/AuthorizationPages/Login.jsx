@@ -6,25 +6,79 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../styles/AuthorizationPages/Login.css";
 import AuthPageHeader from "../../common/components/AuthorizationPage/authPageheader";
+import {useAdminApi} from "../../api/admin/adminApi";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const {initiateLogin} = useAdminApi();
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  // Function to validate if input is a valid email format
+  const isValidEmail = (input) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(input);
+  };
+
+  // Function to validate if input is a valid username format
+  const isValidUsername = (input) => {
+    // Username should be at least 3 characters, alphanumeric and underscores allowed
+    const usernameRegex = /^[a-zA-Z0-9_]{3,}$/;
+    return usernameRegex.test(input);
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (!email.endsWith("@gmail.com")) {
-      toast.error("Please enter a valid Gmail address");
+    setIsLoading(true);
+    
+    // Validate input format
+    const isEmail = isValidEmail(emailOrUsername);
+    const isUsername = isValidUsername(emailOrUsername);
+    
+    if (!isEmail && !isUsername) {
+      toast.error("Please enter a valid email address or username (at least 3 characters, letters, numbers, and underscores only)");
+      setIsLoading(false);
       return;
     }
-    if (email && password) {
-      localStorage.setItem('userEmail', email);
-      // Navigate to TwoFactorAuth page with email
-      navigate("/two-factor-auth", { state: { email } });
-    } else {
-      toast.error("Please enter a valid email and password.");
+
+    if (!emailOrUsername || !password) {
+      toast.error("Please enter a valid email/username and password.");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      // Call the API with proper parameter names matching your .NET controller
+      const response = await initiateLogin({
+        Identifier: emailOrUsername,  // Note: Capital 'I' to match .NET model
+        Password: password       // Note: Capital 'P' to match .NET model
+      });
+      
+      localStorage.setItem('userEmail', emailOrUsername);
+      toast.success("Login initiated successfully");
+      
+      // Navigate to TwoFactorAuth page with identifier and from parameter
+      navigate("/two-factor-auth", { 
+        state: { 
+          email: emailOrUsername,
+          from: "login"
+        } 
+      });
+      
+    } catch (error) {
+      console.error("Login error:", error);
+      
+      if (error.response?.status === 401) {
+        toast.error("Invalid credentials. Please check your email and password.");
+      } else if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Login failed. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -61,16 +115,17 @@ export default function Login() {
 
                   <Col xs={12} md={6}>
                     <Form onSubmit={handleLogin}>
-                      <Form.Group className="mb-3 custom-font" controlId="formEmail">
+                      <Form.Group className="mb-3 custom-font" controlId="formEmailOrUsername">
                         <Form.Label>Username or email</Form.Label>
                         <Form.Control
-                          type="email"
-                          placeholder="Enter email (e.g., user@gmail.com)"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          type="text"
+                          placeholder="Enter username or email"
+                          value={emailOrUsername}
+                          onChange={(e) => setEmailOrUsername(e.target.value)}
                           required
                           className="custom-font userInput"
                         />
+                        
                       </Form.Group>
 
                       <Form.Group className="mb-3 custom-font" controlId="formPassword">
@@ -112,8 +167,9 @@ export default function Login() {
                         variant="primary" 
                         type="submit" 
                         className="loginButton w-100"
+                        disabled={isLoading}
                       >
-                        Login
+                        {isLoading ? 'Loading...' : 'Login'}
                       </Button>
 
                       <div className="custom-font text-center mt-3">

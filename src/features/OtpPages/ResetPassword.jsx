@@ -1,17 +1,21 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { Container, Row, Col, Form, Button, Card, Image } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate  } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../styles/AuthorizationPages/Register.css"; // Reusing the same CSS for consistency
 import PasswordRequirements from "../../common/components/AuthorizationPage/passwordRequirements.jsx";
 import AuthPageHeader from "../../common/components/AuthorizationPage/authPageheader.jsx";
+import { useAdminApi } from "../../api/admin/adminApi";
 
 export default function ResetPassword() {
+  const { resetPassword } = useAdminApi();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate(); 
   
   // Get email from navigation state or use a default
   const userEmail = location.state?.email || "";
@@ -25,8 +29,9 @@ export default function ResetPassword() {
     return isLength && isUpper && isLower && isNumber && isSpecial;
   };
 
-  const handleResetPassword = (e) => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
+    
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -35,7 +40,39 @@ export default function ResetPassword() {
       toast.error("Password does not meet the requirements");
       return;
     }
-    toast.success("Password reset successful");
+
+    setIsLoading(true);
+    
+    try {
+      const response = await resetPassword({
+        Email: userEmail,               
+        Password: password,              
+        ConfirmPassword: confirmPassword 
+      });
+      
+      toast.success("Password reset successful! You can now login with your new password.");
+      
+      // Navigate to login page after successful password reset
+      navigate('/login');
+      
+    } catch (error) {
+      console.error("Reset password error:", error);
+      
+      if (error.response?.data?.Message) {
+        // Handle FluentValidation errors
+        toast.error(error.response.data.Message);
+      } else if (error.response?.data?.Errors) {
+        // Handle multiple validation errors
+        const errorMessages = error.response.data.Errors.join(', ');
+        toast.error(errorMessages);
+      } else if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Password reset failed. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -106,8 +143,9 @@ export default function ResetPassword() {
                       variant="primary"
                       type="submit"
                       className="loginButton w-100 mt-3"
+                      disabled={isLoading}
                     >
-                      Reset Password
+                      {isLoading ? 'Resetting Password...' : 'Reset Password'}
                     </Button>
                     <div className="custom-font text-center mt-4">
                       <span>Remember your password? </span>
