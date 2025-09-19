@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Container, Row, Col, Form, Button, Card, Image } from "react-bootstrap";
 import { Link, useLocation, useNavigate  } from "react-router-dom";
 import { toast } from "react-toastify";
-import "../../styles/AuthorizationPages/Register.css"; // Reusing the same CSS for consistency
+import "../../styles/AuthorizationPages/Register.css"; 
 import PasswordRequirements from "../../common/components/AuthorizationPage/passwordRequirements.jsx";
 import AuthPageHeader from "../../common/components/AuthorizationPage/authPageheader.jsx";
 import { useAdminApi } from "../../api/admin/adminApi";
@@ -17,7 +17,6 @@ export default function ResetPassword() {
   const location = useLocation();
   const navigate = useNavigate(); 
   
-  // Get email from navigation state or use a default
   const userEmail = location.state?.email || "";
 
   const validatePassword = (pwd) => {
@@ -52,7 +51,6 @@ export default function ResetPassword() {
       
       toast.success("Password reset successful! You can now login with your new password.");
       
-      // Navigate to login page after successful password reset
       navigate('/login');
       
     } catch (error) {

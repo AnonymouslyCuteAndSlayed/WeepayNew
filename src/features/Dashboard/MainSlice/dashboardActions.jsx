@@ -1,6 +1,8 @@
 import React from 'react';
 import "../../../styles/dashboard/dashboard.css";
+import {useNavigate} from 'react-router-dom'
 import { Col } from 'react-bootstrap';
+import Main from "../../AddProposal/mainCalculator"
 import { 
   FilePlus,
   FolderKanban,
@@ -11,7 +13,9 @@ import {
  
 
 function DashboardActions() {
-  const handleAddProposal = () => {
+  const navigate = useNavigate()
+  const handleAddProposal = () => { 
+    navigate ('/src/features/AddProposal/main.jsx');
     console.log('Add new proposal clicked');
   };
 

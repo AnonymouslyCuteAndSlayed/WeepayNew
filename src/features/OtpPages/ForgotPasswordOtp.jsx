@@ -11,7 +11,7 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const [isEmailSent, setIsEmailSent] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(300); 
   const [isLoading, setIsLoading] = useState(false); 
   const navigate = useNavigate();
 

@@ -10,11 +10,16 @@ import InvoiceReport from "../features/AuthorizationPages/invoice.jsx";
 import Dashboard from "../features/Dashboard/dashboard.jsx";
 import Sidebar from "../common/navs/Sidebar/sidebar.jsx";
 import ProfilePicture from "../features/ProfilePictureSettings/changeProfileSettings.jsx";
+import MainCalculator from "features/AddProposal/mainCalculator.jsx";
+
+
 
 
 export default function Router() {
   return (
+    
     <Routes>
+      
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
@@ -23,8 +28,16 @@ export default function Router() {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/sidebar" element={<Sidebar />} />
+
+      {/*Inside Pages */}
       <Route path="/invoice" element={<InvoiceReport />} />
       <Route path="/profilepicture" element={<ProfilePicture />} />
+
+      <Route path="/profilepicture" element={<ProfilePicture />} />
+
+      <Route path="/mainCalculator" element={<MainCalculator />} />
+
+
 
     </Routes>
   );

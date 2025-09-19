@@ -18,8 +18,7 @@ export default function TwoFactorAuth() {
   const navigate = useNavigate();
 
   // Timer state and effect
-  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
-
+  const [timeLeft, setTimeLeft] = useState(300); 
   useEffect(() => {
     if (email && !toastShown.current) {
       toast.success(`Verification code sent to: ${email}`);
@@ -58,15 +57,12 @@ export default function TwoFactorAuth() {
         Purpose: fromPage === "register" ? "CreateAccount" : "Login"  // Set purpose based on context
       });
       
-      // Handle both possible response formats from your API
       if (response.IsSuccess || response.isSuccess) {
         toast.success("Authentication successful!");
         
-        // Store authentication status if needed
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('userEmail', email);
         
-        // Navigate based on where user came from
         if (fromPage === "register" || fromPage === "reset") {
           if (fromPage === "reset") {
             toast.success("Password reset successfully");
@@ -77,9 +73,7 @@ export default function TwoFactorAuth() {
         }
       } else {
         toast.error("Invalid or expired code. Please try again.");
-        // Reset the code inputs
         setCode(['', '', '', '', '', '']);
-        // Focus on first input
         document.getElementById('code-0')?.focus();
       }
       
@@ -94,9 +88,7 @@ export default function TwoFactorAuth() {
         toast.error("Verification failed. Please try again.");
       }
       
-      // Reset the code inputs on error
       setCode(['', '', '', '', '', '']);
-      // Focus on first input
       document.getElementById('code-0')?.focus();
       
     } finally {
@@ -109,7 +101,6 @@ export default function TwoFactorAuth() {
     toast.success("OTP resent to your email");
   };
 
-  // Format timeLeft as mm:ss
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60).toString().padStart(2, '0');
     const s = (seconds % 60).toString().padStart(2, '0');

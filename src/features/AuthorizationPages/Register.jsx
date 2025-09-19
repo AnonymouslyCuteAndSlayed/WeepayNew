@@ -9,14 +9,14 @@ import AuthPageHeader from "../../common/components/AuthorizationPage/authPagehe
 import { useAdminApi } from "../../api/admin/adminApi";
 
 export default function Register() {
-  const { createAccount } = useAdminApi(); // Added destructured createAccount
+  const { createAccount } = useAdminApi(); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [userType, setUserType] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Added missing isLoading state
+  const [isLoading, setIsLoading] = useState(false); 
   const navigate = useNavigate();
 
   const validatePassword = (pwd) => {
@@ -28,7 +28,7 @@ export default function Register() {
     return isLength && isUpper && isLower && isNumber && isSpecial;
   };
 
-  const handleRegister = async (e) => { // Added async keyword
+  const handleRegister = async (e) => { 
     e.preventDefault();
     
     if (!email.endsWith("@gmail.com")) {
@@ -66,7 +66,6 @@ export default function Register() {
       
       toast.success("Account created successfully! Please check your email for verification code.");
       
-      // Navigate to TwoFactorAuth page with email and from parameter
       navigate("/two-factor-auth", { state: { email, from: "register" } });
       
     } catch (error) {

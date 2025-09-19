@@ -24,7 +24,6 @@ export default function Login() {
 
   // Function to validate if input is a valid username format
   const isValidUsername = (input) => {
-    // Username should be at least 3 characters, alphanumeric and underscores allowed
     const usernameRegex = /^[a-zA-Z0-9_]{3,}$/;
     return usernameRegex.test(input);
   };
@@ -33,7 +32,6 @@ export default function Login() {
     e.preventDefault();
     setIsLoading(true);
     
-    // Validate input format
     const isEmail = isValidEmail(emailOrUsername);
     const isUsername = isValidUsername(emailOrUsername);
     
@@ -50,7 +48,6 @@ export default function Login() {
     }
 
     try {
-      // Call the API with proper parameter names matching your .NET controller
       const response = await initiateLogin({
         Identifier: emailOrUsername,  // Note: Capital 'I' to match .NET model
         Password: password       // Note: Capital 'P' to match .NET model
@@ -60,7 +57,7 @@ export default function Login() {
       toast.success("Login initiated successfully");
       
       // Navigate to TwoFactorAuth page with identifier and from parameter
-      navigate("/two-factor-auth", { 
+      navigate("/dashboard", { 
         state: { 
           email: emailOrUsername,
           from: "login"
@@ -92,7 +89,6 @@ export default function Login() {
         {/* Header Row */}
         <AuthPageHeader />
 
-        {/* Centered Login Card */}
         <Row className="justify-content-center align-items-center">
           <Col xs={11} md={9} lg={6}>
             <Card className="login-card pt-0 px-xs-3 mb-5 p-md-0 p-0 border-0">
