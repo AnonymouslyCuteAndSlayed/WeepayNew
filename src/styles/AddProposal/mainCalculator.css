@@ -1,0 +1,102 @@
+.body {
+    height: 100vh;
+    width: 100%;
+}
+.main-container {
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    background: #F0EDED;
+    overflow: hidden !important;
+    padding: 5px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(20px, 5vw, 100px);
+}
+
+.main-container.sidebar-expanded {
+    margin-left: 250px; 
+}
+
+.main-container.sidebar-collapsed {
+    margin-left: 80px; 
+}
+
+
+.calculator-field,
+.pdf-field {
+    width: 45%;
+    height:600px;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.calculator-field {
+    padding: 20px 0 0 0;
+}
+
+.pdf-field{
+    background-color: #ffff;
+    border-radius: 20px;
+    padding: 20px;   
+
+}
+
+.folderplus {
+    width: 30px;
+    height: auto;
+}
+
+.calculator-field h4{
+    font-weight: 600;
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+.input-container {
+    width: 100%;
+    height: 400px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+
+
+/*Basic info style*/
+
+.client-field{
+     display: flex;
+     margin-top: 20px;
+    
+}
+
+.client-section {
+
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.input, .add-button {
+    height: 30px;
+    width: 70px;
+    padding: 2px;
+    
+}
+
+.nextButton {
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+}
+

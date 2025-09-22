@@ -55,7 +55,6 @@ const Sidebar = ({ onNavItemClick, onSidebarToggle }) => {
     const newExpandedState = !isExpanded;
     setIsExpanded(newExpandedState);
     
-    // Notify parent component about sidebar state change
     if (onSidebarToggle) {
       onSidebarToggle(newExpandedState);
     }
@@ -69,7 +68,6 @@ const Sidebar = ({ onNavItemClick, onSidebarToggle }) => {
   return (
       <>
           <header className="navs-header">
-      {/* Toggle Menu */}
       
       <div className="brand-container">
                 {/* Toggle Menu */}

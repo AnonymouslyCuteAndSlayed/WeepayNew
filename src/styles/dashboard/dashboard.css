@@ -1,10 +1,8 @@
 html, body {
   margin: 0;
   height: 100%;
-  overflow: hidden;  /* 🚫 disables scroll everywhere */
+  overflow: hidden; 
 }
-
-
 
 .dashboard-container {
   transition: margin-left 0.3s ease, width 0.3s ease;
@@ -13,13 +11,12 @@ html, body {
   transition: margin-left 0.3s ease;
   padding: 20px;
   min-height: 100vh;
-  
 }
 
 .sidebar {
     overflow: hidden !important;
-
 }
+
 .no-overflow {
   overflow: hidden;
   height: 100vh;
@@ -65,7 +62,6 @@ html, body {
   transition: all 0.2s ease;
   text-align: left;
   border-radius: 5px;
-
 }
 
 .dashboard-btn:hover {

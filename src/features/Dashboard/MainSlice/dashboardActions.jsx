@@ -15,7 +15,7 @@ import {
 function DashboardActions() {
   const navigate = useNavigate()
   const handleAddProposal = () => { 
-    navigate ('/src/features/AddProposal/main.jsx');
+    navigate ('/mainCalculator');
     console.log('Add new proposal clicked');
   };
 

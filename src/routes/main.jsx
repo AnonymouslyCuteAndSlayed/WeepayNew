@@ -10,9 +10,7 @@ import InvoiceReport from "../features/AuthorizationPages/invoice.jsx";
 import Dashboard from "../features/Dashboard/dashboard.jsx";
 import Sidebar from "../common/navs/Sidebar/sidebar.jsx";
 import ProfilePicture from "../features/ProfilePictureSettings/changeProfileSettings.jsx";
-import MainCalculator from "features/AddProposal/mainCalculator.jsx";
-
-
+import MainCalculator from "../features/AddProposal/mainCalculator.jsx";
 
 
 export default function Router() {
@@ -35,7 +33,8 @@ export default function Router() {
 
       <Route path="/profilepicture" element={<ProfilePicture />} />
 
-      <Route path="/mainCalculator" element={<MainCalculator />} />
+      <Route path= "/mainCalculator" element={<MainCalculator/>}/>
+
 
 
 
