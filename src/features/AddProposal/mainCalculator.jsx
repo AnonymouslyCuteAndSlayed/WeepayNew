@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import Sidebar from '../../common/navs/Sidebar/sidebar';
 import StepBreadcrumbs from '../../common/navs/Breadcrumbs/breadcrumbs';
-import { FileText, Calculator, Settings, CheckCircle, FolderPlus  } from 'lucide-react';
+import { FileText, Calculator, Settings, CheckCircle, UserRoundPlus, FolderPlus} from 'lucide-react';
 
-// Import all your individual page JSX files
-import BasicInfoPage from '../AddProposal/InputField/basicInformationField';
-{/*import CalculationPage from './pages/CalculationPage';
-import SettingsPage from './pages/SettingsPage';
+import BasicInfoPage from './InputField/ClientDetails/basicInformationField';
+import ResourceAllocation from '../AddProposal/InputField/resourceAllocationpage';
+{/*import SettingsPage from './pages/SettingsPage';
 import ReviewPage from './pages/ReviewPage';*/}
 
 import "../../styles/AddProposal/mainCalculator.css"
@@ -15,14 +14,13 @@ function MainCalculator() {
   const [activeItem, setActiveItem] = useState('dashboard');
   const [sidebarExpanded, setSidebarExpanded] = useState(true);
   
-  // ✨ SHARED STATE - This is the key!
   const [currentStep, setCurrentStep] = useState(0); // Track current page
   const [formData, setFormData] = useState({}); // Shared form data
 
-  // Define your steps/pages
+  //steps/pages
   const steps = [
     { label: 'Basic Info', icon: FileText },
-    { label: 'Calculations', icon: Calculator },
+    { label: 'Resource Allocation', icon: UserRoundPlus},
     { label: 'Settings', icon: Settings },
     { label: 'Review', icon: CheckCircle }
   ];
@@ -35,12 +33,11 @@ function MainCalculator() {
     setActiveItem(itemId);
   };
 
-  // 🍞 Handle breadcrumb navigation
+  // breadcrumb navigation
   const handleStepClick = (stepIndex) => {
     setCurrentStep(stepIndex);
   };
 
-  // 🔄 Functions to pass to child components
   const goToNextStep = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
@@ -53,7 +50,7 @@ function MainCalculator() {
     }
   };
 
-  // 🎯 Render the current page based on currentStep
+  // Render the current page based on currentStep
   const renderCurrentPage = () => {
     switch (currentStep) {
       case 0:
@@ -69,8 +66,8 @@ function MainCalculator() {
         );
       case 1:
         return (
-          <CalculationPage 
-            formData={formData} 
+          <ResourceAllocation
+            formData={formData}
             setFormData={setFormData}
             onNext={goToNextStep}
             onPrevious={goToPreviousStep}
@@ -135,12 +132,7 @@ function MainCalculator() {
 
             {renderCurrentPage()}
 
-            <button className='nextButton btn btn-primary'>
-              Next
-            </button>
-
             
-
           </div>
         </div>
 

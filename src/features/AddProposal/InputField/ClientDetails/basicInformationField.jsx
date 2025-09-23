@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
-import "../../../styles/AddProposal/mainCalculator.css"
+import "../../../../styles/AddProposal/mainCalculator.css"
+import AddClientModal from "../ClientDetails/addClient"
 
 function BasicInfoPage({ formData, setFormData, onNext, onPrevious, currentStep, totalSteps }) {
   const [clients, setClients] = useState([]);
   const [loadingClients, setLoadingClients] = useState(true);
+  const [showAddClientModal, setShowAddClientModal] = useState(false);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -31,7 +33,7 @@ function BasicInfoPage({ formData, setFormData, onNext, onPrevious, currentStep,
     fetchClients();
   }, []);
 
-    const calculateEndDate = (startDate, durationWeeks) => {
+  const calculateEndDate = (startDate, durationWeeks) => {
     if (!startDate || !durationWeeks) return '';
     const start = new Date(startDate);
     const end = new Date(start);
@@ -39,6 +41,7 @@ function BasicInfoPage({ formData, setFormData, onNext, onPrevious, currentStep,
     end.setDate(start.getDate() + days);
     return end.toISOString().split('T')[0]; // YYYY-MM-DD format
   };
+
   const handleClientChange = (e) => {
     const clientId = e.target.value;
     const selectedClient = clients.find(client => client.id.toString() === clientId);
@@ -67,7 +70,25 @@ function BasicInfoPage({ formData, setFormData, onNext, onPrevious, currentStep,
   };
 
   const handleAddClient = () => {
-    alert('Add Client functionality - implement your modal or navigation here');
+    setShowAddClientModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowAddClientModal(false);
+  };
+
+  const handleClientAdded = (newClient) => {
+    // Add the new client to the clients list
+    setClients(prev => [...prev, newClient]);
+    // Optionally select the new client automatically
+    setFormData(prev => ({
+      ...prev,
+      clientId: newClient.id.toString(),
+      clientName: newClient.name,
+      clientEmail: newClient.email
+    }));
+    // Close the modal
+    setShowAddClientModal(false);
   };
 
   const handleNext = () => {
@@ -175,7 +196,6 @@ function BasicInfoPage({ formData, setFormData, onNext, onPrevious, currentStep,
             />
           </div>
 
-
         {/* Estimation Date */}
         <div className="mb-4">
           <label className="form-label text-muted">
@@ -194,6 +214,35 @@ function BasicInfoPage({ formData, setFormData, onNext, onPrevious, currentStep,
           />
         </div>
       </div>
+      
+      {/* Button Container */}
+      <div className="button-container">
+        <div className="button-left">
+          {currentStep > 0 && (
+            <button
+              className="previousButton btn btn-secondary"
+              onClick={onPrevious}
+            >
+              Previous
+            </button>
+          )}
+        </div>
+          <button
+            className="nextButton btn btn-primary"
+            onClick={handleNext}
+          >
+            Next
+          </button>
+      </div>
+
+      {/* Add Client Modal */}
+      {showAddClientModal && (
+        <AddClientModal
+          show={showAddClientModal}
+          onClose={handleCloseModal}
+          onClientAdded={handleClientAdded}
+        />
+      )}
     </div>
   );
 }

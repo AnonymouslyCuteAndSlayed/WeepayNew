@@ -55,7 +55,7 @@ function Dashboard() {
         {/* Statistic total and revenue cards part*/}
        <Row className="g-4">
           <Col xxl={8} xl={8} lg={8} md={12} className="d-flex flex-column">
-            <div className="d-flex flex-column h-100" className="flex-fill">
+            <div className="d-flex flex-column h-100 flex-fill">
               
                 <Card.Body className="flex-fill statsContainer">
                   < StatsCardsSection />
