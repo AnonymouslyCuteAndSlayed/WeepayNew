@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import "../../../styles/AddProposal/mainCalculator.css"
 
 function ResourceAllocationPage({ setFormData, onNext, onPrevious, currentStep }) {
-  // ✅ Dynamic rows state - starts with one Software Engineer row
   const [resourceRows, setResourceRows] = useState([
     {
       id: 1,
@@ -15,7 +14,6 @@ function ResourceAllocationPage({ setFormData, onNext, onPrevious, currentStep }
     }
   ]);
 
-  // Calculate derived values when base values change
   const calculateDerivedValues = (fte, baseMonthly) => {
     if (!fte || !baseMonthly) {
       return { withOverhead: '', weeklyRate: '', totalCost: '' };
@@ -24,9 +22,8 @@ function ResourceAllocationPage({ setFormData, onNext, onPrevious, currentStep }
     const fteNum = parseFloat(fte);
     const baseMonthlyNum = parseFloat(baseMonthly);
 
-    // Assuming 20% overhead
     const withOverhead = baseMonthlyNum * 1.2;
-    const weeklyRate = withOverhead / 4.33; // Average weeks per month
+    const weeklyRate = withOverhead / 4.33; 
     const totalCost = withOverhead * fteNum;
 
     return {
@@ -36,13 +33,11 @@ function ResourceAllocationPage({ setFormData, onNext, onPrevious, currentStep }
     };
   };
 
-  // Handle input changes
   const handleInputChange = (rowId, field, value) => {
     const updatedRows = resourceRows.map(row => {
       if (row.id === rowId) {
         const updatedRow = { ...row, [field]: value };
 
-        // If FTE or Base Monthly changes, recalculate derived values
         if (field === 'fte' || field === 'baseMonthly') {
           const { withOverhead, weeklyRate, totalCost } = calculateDerivedValues(
             field === 'fte' ? value : updatedRow.fte,
@@ -61,17 +56,16 @@ function ResourceAllocationPage({ setFormData, onNext, onPrevious, currentStep }
 
     setResourceRows(updatedRows);
 
-    // Update formData for persistence
     setFormData(prev => ({
       ...prev,
       resourceAllocation: updatedRows
     }));
+    
   };
 
-  // Add new row
   const addRow = () => {
     const newRow = {
-      id: Date.now(), // Simple ID generation
+      id: Date.now(), 
       role: '',
       fte: '',
       baseMonthly: '',
@@ -83,13 +77,11 @@ function ResourceAllocationPage({ setFormData, onNext, onPrevious, currentStep }
     setResourceRows([...resourceRows, newRow]);
   };
 
-  // Remove row (optional - only show if more than 1 row)
   const removeRow = (rowId) => {
     if (resourceRows.length > 1) {
       const updatedRows = resourceRows.filter(row => row.id !== rowId);
       setResourceRows(updatedRows);
       
-      // Update formData
       setFormData(prev => ({
         ...prev,
         resourceAllocation: updatedRows
@@ -121,23 +113,16 @@ function ResourceAllocationPage({ setFormData, onNext, onPrevious, currentStep }
   const totals = calculateTotals();
 
   const handleNext = () => {
-    // Basic validation - check if at least one role has data
-    const hasData = resourceRows.some(row =>
-      row.fte && row.baseMonthly
-    );
-
-    if (!hasData) {
-      alert('Please fill in at least one role with FTE and Base Monthly values');
-      return;
-    }
-
     onNext();
   };
 
   return (
     <div className="resource-allocation-container">
+      <div>
+        <h4 className="fw-bold mb-4 mt-4">Resource Allocation</h4>
+      </div>
 
-      <div className="table-responsive" style={{ maxHeight: '250px', overflowY: resourceRows.length > 4? 'auto' : 'visible' }}>
+      <div className="table-responsive" style={{ maxHeight: '200px', overflowY: resourceRows.length > 3? 'auto' : 'visible' }}>
         <table className="table table-bordered text-center">
           <thead className="table-header" style={{ position: resourceRows.length > 3 ? 'sticky' : 'static', top: 0, zIndex: 10, backgroundColor: 'white' }}>
             <tr>
@@ -274,7 +259,6 @@ function ResourceAllocationPage({ setFormData, onNext, onPrevious, currentStep }
         </table>
       </div>
 
-      {/* Add Row Button */}
       <div className="mb-3">
         <button
           type="button"
@@ -285,7 +269,6 @@ function ResourceAllocationPage({ setFormData, onNext, onPrevious, currentStep }
         </button>
       </div>
 
-      {/* Button Container */}
       <div className="button-container">
         <div className="button-left">
           {currentStep > 0 && (
